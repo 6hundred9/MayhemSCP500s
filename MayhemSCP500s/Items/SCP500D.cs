@@ -11,15 +11,13 @@ namespace MayhemSCP500s.Items
 {
     public class Scp500D : CustomItem
     {
-        private readonly ItemType _type = ItemType.SCP500;
-        
         public override uint Id { get; set; } = 2691;
         public override string Name { get; set; } = "SCP-500-D";
         public override string Description { get; set; } =
             "Disguises you as a role of the opposite faction";
         public override float Weight { get; set; } = 0.5f;
         public override SpawnProperties SpawnProperties { get; set; }
-        public override ItemType Type { get => _type; set => throw new ArgumentException("Do you really think I'll allow you to change the item type?"); }
+        public override ItemType Type { get; set; } = ItemType.SCP500;
         
         protected override void SubscribeEvents()
         {
@@ -35,28 +33,32 @@ namespace MayhemSCP500s.Items
 
         private void UsedItem(UsedItemEventArgs ev)
         {
-            RoleTypeId role = ev.Player.Role.Type;
-            RoleTypeId funny = RoleTypeId.Tutorial;
-            int even_funnier = Random.Range(1, 3);
-            if (even_funnier == 1 && ev.Player.Role.Side == Side.ChaosInsurgency)
+            if (Check(ev.Item))
             {
-                funny = RoleTypeId.Scientist;
-            } else if (even_funnier == 2 && ev.Player.Role.Side == Side.ChaosInsurgency)
-            {
-                funny = RoleTypeId.NtfPrivate;
+                RoleTypeId role = ev.Player.Role.Type;
+                RoleTypeId funny = RoleTypeId.Tutorial;
+                int even_funnier = Random.Range(1, 3);
+                if (even_funnier == 1 && ev.Player.Role.Side == Side.ChaosInsurgency)
+                {
+                    funny = RoleTypeId.Scientist;
+                } else if (even_funnier == 2 && ev.Player.Role.Side == Side.ChaosInsurgency)
+                {
+                    funny = RoleTypeId.NtfPrivate;
+                }
+                if (even_funnier == 1 && ev.Player.Role.Side == Side.Mtf)
+                {
+                    funny = RoleTypeId.ClassD;
+                } else if (even_funnier == 2 && ev.Player.Role.Side == Side.Mtf)
+                {
+                    funny = RoleTypeId.ChaosRifleman;
+                }
+                ev.Player.ChangeAppearance(funny);
+                Timing.CallDelayed(20f, () =>
+                {
+                    ev.Player.ChangeAppearance(role);
+                });
             }
-            if (even_funnier == 1 && ev.Player.Role.Side == Side.Mtf)
-            {
-                funny = RoleTypeId.ClassD;
-            } else if (even_funnier == 2 && ev.Player.Role.Side == Side.Mtf)
-            {
-                funny = RoleTypeId.ChaosRifleman;
-            }
-            MirrorExtensions.ChangeAppearance(ev.Player, funny);
-            Timing.CallDelayed(20f, () =>
-            {
-                ev.Player.ChangeAppearance(role);
-            });
+            
         }
     }
 }

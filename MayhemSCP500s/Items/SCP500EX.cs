@@ -10,15 +10,13 @@ namespace MayhemSCP500s.Items
 {
     public class Scp500Ex  : CustomItem
     {
-        private readonly ItemType _type = ItemType.SCP500;
-        
         public override uint Id { get; set; } = 0474  ;
         public override string Name { get; set; } = "SCP-500-EX";
         public override string Description { get; set; } =
             "Kaboom";
         public override float Weight { get; set; } = 0.5f;
         public override SpawnProperties SpawnProperties { get; set; }
-        public override ItemType Type { get => _type; set => throw new ArgumentException("Do you really think I'll allow you to change the item type?"); }
+        public override ItemType Type { get; set; } = ItemType.SCP500;
         
         protected override void SubscribeEvents()
         {
@@ -34,15 +32,18 @@ namespace MayhemSCP500s.Items
 
         private void UsedItem(UsedItemEventArgs ev)
         {
-            ev.Player.IsGodModeEnabled = true;
-            ExplosiveGrenade grenade = (ExplosiveGrenade)Item.Create(ItemType.GrenadeHE);
-            grenade.FuseTime = 0.1f;
-            grenade.SpawnActive(ev.Player.Position, ev.Player);
-            grenade.Projectile.IsLocked = true;
-            Timing.CallDelayed(0.2f, () =>
+            if (Check(ev.Item))
             {
-                ev.Player.IsGodModeEnabled = false;
-            });
+                ev.Player.IsGodModeEnabled = true;
+                ExplosiveGrenade grenade = (ExplosiveGrenade)Item.Create(ItemType.GrenadeHE);
+                grenade.FuseTime = 0.1f;
+                grenade.SpawnActive(ev.Player.Position, ev.Player);
+                grenade.Projectile.IsLocked = true;
+                Timing.CallDelayed(0.2f, () =>
+                {
+                    ev.Player.IsGodModeEnabled = false;
+                });
+            }
         }
     }
 }

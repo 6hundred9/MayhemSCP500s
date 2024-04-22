@@ -8,15 +8,13 @@ namespace MayhemSCP500s.Items
 {
     public class Scp500B : CustomItem
     {
-        private readonly ItemType _type = ItemType.SCP500;
-        
         public override uint Id { get; set; } = 9448;
         public override string Name { get; set; } = "SCP-500-B";
         public override string Description { get; set; } =
             "Betray your own side";
         public override float Weight { get; set; } = 0.5f;
         public override SpawnProperties SpawnProperties { get; set; }
-        public override ItemType Type { get => _type; set => throw new ArgumentException("Do you really think I'll allow you to change the item type?"); }
+        public override ItemType Type { get; set; } = ItemType.SCP500;
         
         protected override void SubscribeEvents()
         {
@@ -31,13 +29,16 @@ namespace MayhemSCP500s.Items
         }
         private void UsedItem(UsedItemEventArgs ev)
         {
-            if (ev.Player.Role.Side == Side.Mtf)
+            if (Check(ev.Item))
             {
-                ev.Player.Role.Set(RoleTypeId.ChaosConscript, RoleSpawnFlags.None);
-            }
-            else if (ev.Player.Role.Side == Side.ChaosInsurgency)
-            {
-                ev.Player.Role.Set(RoleTypeId.NtfSpecialist, RoleSpawnFlags.None);
+                if (ev.Player.Role.Side == Side.Mtf)
+                {
+                    ev.Player.Role.Set(RoleTypeId.ChaosConscript, RoleSpawnFlags.None);
+                }
+                else if (ev.Player.Role.Side == Side.ChaosInsurgency)
+                {
+                    ev.Player.Role.Set(RoleTypeId.NtfSpecialist, RoleSpawnFlags.None);
+                }
             }
         }
     }

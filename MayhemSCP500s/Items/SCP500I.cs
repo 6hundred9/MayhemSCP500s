@@ -13,8 +13,6 @@ namespace MayhemSCP500s.Items
 {
     public class Scp500I : CustomItem
     {
-        private readonly ItemType _type = ItemType.SCP500;
-        
         public override uint Id { get; set; } = 7510;
         public override string Name { get; set; } = "SCP-500-I";
         public override string Description { get; set; } =
@@ -22,7 +20,7 @@ namespace MayhemSCP500s.Items
         public override float Weight { get; set; } = 0.5f;
 
         public override SpawnProperties SpawnProperties { get; set; }
-        public override ItemType Type { get => _type; set => throw new ArgumentException("Do you really think I'll allow you to change the item type?"); }
+        public override ItemType Type { get; set; } = ItemType.SCP500;
 
         protected override void SubscribeEvents()
         {
@@ -38,27 +36,30 @@ namespace MayhemSCP500s.Items
 
         private void UsedItem(UsedItemEventArgs ev)
         {
-            if (Player.List.FirstOrDefault(player => player.Role.Type == RoleTypeId.Scp096) != null)
+            if (Check(ev.Item))
             {
-                IEnumerable<Player> scp096S = Player.List.Where(player => player.Role.Type == RoleTypeId.Scp096);
-                foreach (Player scp in scp096S)
+                if (Player.List.FirstOrDefault(player => player.Role.Type == RoleTypeId.Scp096) != null)
                 {
-                    if (scp.Role is Scp096Role scp096)
+                    IEnumerable<Player> scp096S = Player.List.Where(player => player.Role.Type == RoleTypeId.Scp096);
+                    foreach (Player scp in scp096S)
                     {
-                        if (scp096.HasTarget(ev.Player))
-                            scp096.RemoveTarget(ev.Player);
+                        if (scp.Role is Scp096Role scp096)
+                        {
+                            if (scp096.HasTarget(ev.Player))
+                                scp096.RemoveTarget(ev.Player);
+                        }
                     }
                 }
-            }
 
-            if (ev.Player.Role is FpcRole fpc)
-            {
-                fpc.IsInvisible = true;
-
-                Timing.CallDelayed(Plugin.Instance.Config.InvisTime, () =>
+                if (ev.Player.Role is FpcRole fpc)
                 {
-                    fpc.IsInvisible = false;
-                });
+                    fpc.IsInvisible = true;
+
+                    Timing.CallDelayed(Plugin.Instance.Config.InvisTime, () =>
+                    {
+                        fpc.IsInvisible = false;
+                    });
+                }
             }
         }
     }

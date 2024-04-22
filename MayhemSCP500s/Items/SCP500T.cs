@@ -9,15 +9,13 @@ namespace MayhemSCP500s.Items
 {
     public class Scp500T : CustomItem
     {
-        private readonly ItemType _type = ItemType.SCP500;
-        
         public override uint Id { get; set; } = 8814;
         public override string Name { get; set; } = "SCP-500-T";
         public override string Description { get; set; } =
             "Teleports you to a random location";
         public override float Weight { get; set; } = 0.5f;
         public override SpawnProperties SpawnProperties { get; set; }
-        public override ItemType Type { get => _type; set => throw new ArgumentException("Do you really think I'll allow you to change the item type?"); }
+        public override ItemType Type { get; set; } = ItemType.SCP500;
         
         protected override void SubscribeEvents()
         {
@@ -33,7 +31,10 @@ namespace MayhemSCP500s.Items
 
         private void UsedItem(UsedItemEventArgs ev)
         {
-            ev.Player.RandomTeleport(typeof(Room));
+            if (Check(ev.Item))
+            {
+                ev.Player.RandomTeleport(typeof(Room));
+            }
         }
     }
     
