@@ -11,7 +11,7 @@ namespace MayhemSCP500s
         public override string Author { get; } = "6hundred9";
         public override string Name { get; } = "Mayhem SCP 500s";
         public override string Prefix { get; } = "mSCP500";
-        public override Version Version { get; } = new Version(1, 3, 0);
+        public override Version Version { get; } = new Version(1, 4, 0);
         public override Version RequiredExiledVersion { get; } = new Version(8, 8, 1);
         public override bool IgnoreRequiredVersionCheck { get; } = true;
 

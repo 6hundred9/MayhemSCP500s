@@ -23,7 +23,6 @@ namespace MayhemSCP500s.Items
         public override SpawnProperties SpawnProperties { get; set; }
         public override ItemType Type { get => _type; set => throw new ArgumentException("Do you really think I'll allow you to change the item type?"); }
         private static int _cooldown = Plugin.Instance.Config.InvisTime;
-        private CoroutineHandle _ok;
 
         protected override void SubscribeEvents()
         {
@@ -54,35 +53,13 @@ namespace MayhemSCP500s.Items
 
             if (ev.Player.Role is FpcRole fpc)
             {
-                foreach (Player plr in Player.List.Where(player => player.Role.Type != RoleTypeId.None || player.Role.Type != RoleTypeId.Filmmaker || player.Role.Type != RoleTypeId.Overwatch || player.Role.Type != RoleTypeId.Spectator))
-                {
-                    fpc.IsInvisibleFor.Add(plr);
-                    
-                }
-                _ok = Timing.RunCoroutine(Countdown(ev.Player));
-            }
-        }
+                fpc.IsInvisible = true;
 
-        private IEnumerator<float> Countdown(Player plyr)
-        {
-            for (;;)
-            {
-                yield return Timing.WaitForSeconds(1f);
-                if (_cooldown <= 0)
+                Timing.CallDelayed(_cooldown, () =>
                 {
-                    if (plyr.Role is FpcRole fpc)
-                    {
-                        fpc.IsInvisibleFor.Clear();
-                        Timing.KillCoroutines(_ok);
-                        break;
-                    }
-                }
-                else
-                {
-                    _cooldown--;
-                }
+                    fpc.IsInvisible = false;
+                });
             }
-            
         }
     }
 }
