@@ -20,9 +20,9 @@ namespace MayhemSCP500s.Items
         public override string Description { get; set; } =
             $"Turns you invisible";
         public override float Weight { get; set; } = 0.5f;
+
         public override SpawnProperties SpawnProperties { get; set; }
         public override ItemType Type { get => _type; set => throw new ArgumentException("Do you really think I'll allow you to change the item type?"); }
-        private static int _cooldown = Plugin.Instance.Config.InvisTime;
 
         protected override void SubscribeEvents()
         {
@@ -38,9 +38,9 @@ namespace MayhemSCP500s.Items
 
         private void UsedItem(UsedItemEventArgs ev)
         {
-            if (Player.List.Any(player => player.Role.Type == RoleTypeId.Scp096))
+            if (Player.List.FirstOrDefault(player => player.Role.Type == RoleTypeId.Scp096) != null)
             {
-                IEnumerable<Player> scp096S = Player.Get(RoleTypeId.Scp096);
+                IEnumerable<Player> scp096S = Player.List.Where(player => player.Role.Type == RoleTypeId.Scp096);
                 foreach (Player scp in scp096S)
                 {
                     if (scp.Role is Scp096Role scp096)
@@ -55,7 +55,7 @@ namespace MayhemSCP500s.Items
             {
                 fpc.IsInvisible = true;
 
-                Timing.CallDelayed(_cooldown, () =>
+                Timing.CallDelayed(Plugin.Instance.Config.InvisTime, () =>
                 {
                     fpc.IsInvisible = false;
                 });
