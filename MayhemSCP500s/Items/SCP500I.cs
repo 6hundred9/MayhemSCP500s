@@ -18,7 +18,7 @@ namespace MayhemSCP500s.Items
         public override uint Id { get; set; } = 7510;
         public override string Name { get; set; } = "SCP-500-I";
         public override string Description { get; set; } =
-            $"Turn you invisible for {Plugin.Instance.Config.InvisTime.ToString()} seconds";
+            $"Turns you invisible";
         public override float Weight { get; set; } = 0.5f;
         public override SpawnProperties SpawnProperties { get; set; }
         public override ItemType Type { get => _type; set => throw new ArgumentException("Do you really think I'll allow you to change the item type?"); }
