@@ -18,14 +18,14 @@ namespace MayhemSCP500s
         public byte MaxSpeedIntensity { get; set; } = 205;
         public float SpeedBoostTime { get; set; } = 20;
         
-        public static Scp500B Scp500b = new Scp500B();
-        public static SCP500C Scp500c = new SCP500C();
-        public static Scp500D Scp500d = new Scp500D();
-        public static Scp500Ex Scp500ex = new Scp500Ex();
-        public static Scp500H Scp500h = new Scp500H();
-        public static Scp500I Scp500i = new Scp500I();
-        public static Scp500S Scp500s = new Scp500S();
-        public static Scp500T Scp500t = new Scp500T();
-        public static Scp500U Scp500u = new Scp500U();
+        public Scp500B Scp500b { get; set; } = new Scp500B();
+        public SCP500C Scp500c { get; set; } = new SCP500C();
+        public Scp500D Scp500d { get; set; } = new Scp500D();
+        public Scp500Ex Scp500ex { get; set; } = new Scp500Ex();
+        public Scp500H Scp500h { get; set; } = new Scp500H();
+        public Scp500I Scp500i { get; set; } = new Scp500I();
+        public Scp500S Scp500s { get; set; } = new Scp500S();
+        public Scp500T Scp500t { get; set; } = new Scp500T();
+        public Scp500U Scp500u { get; set; } = new Scp500U();
     }
 }
