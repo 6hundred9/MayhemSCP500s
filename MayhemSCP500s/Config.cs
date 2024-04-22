@@ -16,7 +16,5 @@ namespace MayhemSCP500s
         public byte MinSpeedIntensity { get; set; } = 10;
         public byte MaxSpeedIntensity { get; set; } = 205;
         public float SpeedBoostTime { get; set; } = 20;
-        
-        // 500s
     }
 }

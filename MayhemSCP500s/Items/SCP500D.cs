@@ -7,7 +7,6 @@ using Exiled.Events.EventArgs.Player;
 using MEC;
 using PlayerRoles;
 using Random = UnityEngine.Random;
-
 namespace MayhemSCP500s.Items
 {
     public class Scp500D : CustomItem

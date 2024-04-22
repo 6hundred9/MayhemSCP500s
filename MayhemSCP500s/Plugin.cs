@@ -4,7 +4,6 @@ using Exiled.API.Features;
 using Exiled.CustomItems.API;
 using Exiled.CustomItems.API.Features;
 using MayhemSCP500s.Items;
-
 namespace MayhemSCP500s
 {
     public class Plugin : Plugin<Config>

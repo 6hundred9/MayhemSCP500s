@@ -4,7 +4,6 @@ using Exiled.API.Features.Spawn;
 using Exiled.CustomItems.API.Features;
 using Exiled.Events.EventArgs.Player;
 using PlayerRoles;
-
 namespace MayhemSCP500s.Items
 {
     public class Scp500B : CustomItem
