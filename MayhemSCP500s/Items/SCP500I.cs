@@ -23,7 +23,7 @@ namespace MayhemSCP500s.Items
         public override SpawnProperties SpawnProperties { get; set; }
         public override ItemType Type { get => _type; set => throw new ArgumentException("Do you really think I'll allow you to change the item type?"); }
         private static int _cooldown = Plugin.Instance.Config.InvisTime;
-        private MEC.CoroutineHandle _ok;
+        private CoroutineHandle _ok;
 
         protected override void SubscribeEvents()
         {

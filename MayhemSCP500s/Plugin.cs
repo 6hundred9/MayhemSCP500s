@@ -17,34 +17,33 @@ namespace MayhemSCP500s
 
         public static Plugin Instance;
 
-        public static List<CustomItem> customItems = new List<CustomItem>()
-        {
-            new Scp500B(),
-            new SCP500C(),
-            new Scp500D(),
-            new Scp500Ex(),
-            new Scp500H(),
-            new Scp500I(),
-            new Scp500S(),
-            new Scp500T(),
-            new Scp500U(),
-        };
+        
         public override void OnEnabled()
         {
             Instance = this;
-            foreach (CustomItem item in customItems)
-            {
-                item.Register();
-            }
+            Config.Scp500b.Register();
+            Config.Scp500c.Register();
+            Config.Scp500d.Register();
+            Config.Scp500ex.Register();
+            Config.Scp500h.Register();
+            Config.Scp500i.Register();
+            Config.Scp500s.Register();
+            Config.Scp500t.Register();
+            Config.Scp500u.Register();
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            foreach (CustomItem item in customItems)
-            {
-                item.Unregister();
-            }
+            Config.Scp500b.Unregister();
+            Config.Scp500c.Unregister();
+            Config.Scp500d.Unregister();
+            Config.Scp500ex.Unregister();
+            Config.Scp500h.Unregister();
+            Config.Scp500i.Unregister();
+            Config.Scp500s.Unregister();
+            Config.Scp500t.Unregister();
+            Config.Scp500u.Unregister();
             base.OnDisabled();
         }
     }
