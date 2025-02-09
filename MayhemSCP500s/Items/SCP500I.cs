@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Exiled.API.Features;
 using Exiled.API.Features.Roles;
@@ -21,6 +22,8 @@ namespace MayhemSCP500s.Items
 
         public override SpawnProperties SpawnProperties { get; set; }
         public override ItemType Type { get; set; } = ItemType.SCP500;
+        [Description("Time you're invisible for when you take SCP-500-I")]
+        public int InvisTime { get; set; } = 12;
 
         protected override void SubscribeEvents()
         {
@@ -44,10 +47,8 @@ namespace MayhemSCP500s.Items
                     foreach (Player scp in scp096S)
                     {
                         if (scp.Role is Scp096Role scp096)
-                        {
                             if (scp096.HasTarget(ev.Player))
                                 scp096.RemoveTarget(ev.Player);
-                        }
                     }
                 }
 
@@ -55,7 +56,7 @@ namespace MayhemSCP500s.Items
                 {
                     fpc.IsInvisible = true;
 
-                    Timing.CallDelayed(Plugin.Instance.Config.InvisTime, () =>
+                    Timing.CallDelayed(InvisTime, () =>
                     {
                         fpc.IsInvisible = false;
                     });

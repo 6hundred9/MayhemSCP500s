@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using Exiled.API.Features.Spawn;
 using Exiled.CustomItems.API.Features;
 using Exiled.Events.EventArgs.Player;
@@ -14,6 +15,8 @@ namespace MayhemSCP500s.Items
         public override float Weight { get; set; } = 0.5f;
         public override SpawnProperties SpawnProperties { get; set; }
         public override ItemType Type { get; set; } = ItemType.SCP500;
+        [Description("Increase of Max Health when SCP-500-H is taken")]
+        public int MaxHealthIncrease { get; set; } = 10;
         
         protected override void SubscribeEvents()
         {
@@ -29,7 +32,7 @@ namespace MayhemSCP500s.Items
 
         private void UsedItem(UsedItemEventArgs ev)
         {
-            if (Check(ev.Item)) ev.Player.MaxHealth += Plugin.Instance.Config.MaxHealthIncrease;
+            if (Check(ev.Item)) ev.Player.MaxHealth += MaxHealthIncrease;
         }
     }
 }

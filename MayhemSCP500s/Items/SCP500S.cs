@@ -15,6 +15,9 @@ namespace MayhemSCP500s.Items
         public override SpawnProperties SpawnProperties { get; set; }
         public override ItemType Type { get; set; } = ItemType.SCP500;
         private MEC.CoroutineHandle _ok;
+        public byte MinSpeedIntensity { get; set; } = 10;
+        public byte MaxSpeedIntensity { get; set; } = 205;
+        public float SpeedBoostTime { get; set; } = 20;
         
         
         protected override void SubscribeEvents()
@@ -34,7 +37,7 @@ namespace MayhemSCP500s.Items
             if (Check(ev.Item))
             {
                 Random random = new Random();
-                ev.Player.EnableEffect(EffectType.MovementBoost, (byte)random.Next(Plugin.Instance.Config.MinSpeedIntensity, Plugin.Instance.Config.MaxSpeedIntensity), Plugin.Instance.Config.SpeedBoostTime);
+                ev.Player.EnableEffect(EffectType.MovementBoost, (byte)random.Next(MinSpeedIntensity, MaxSpeedIntensity), SpeedBoostTime);
             }
         }
     }
